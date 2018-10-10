@@ -1,7 +1,10 @@
 const Rx = require("rxjs");
 const EventEmitter = require("events");
 
-module.exports = () => {
+module.exports = {
+  "title": "#6",
+  "description": "This is exercise #6",
+  "code": () => {
     const fakeCheckbox = new EventEmitter();
     fakeCheckbox.checked = false;
     fakeCheckbox.change = function () {
@@ -13,4 +16,5 @@ module.exports = () => {
     const source = Rx.Observable.interval(100)
         .scan((acc, curr) => acc+1)
         .map(x => Rx.Observable.create(observer => observer.next(x)));
+  }
 }

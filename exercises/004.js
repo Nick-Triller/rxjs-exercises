@@ -1,7 +1,10 @@
 const Rx = require("rxjs");
 const EventEmitter = require("events");
 
-module.exports = () => {
+module.exports = {
+  "title": "#4",
+  "description": "This is exercise #4",
+  "code": () => {
     const fakeButton = new EventEmitter();
     fakeButton.click = function() { 
         this.emit("click") 
@@ -19,4 +22,5 @@ module.exports = () => {
         .forEach(x => console.log(x));
 
     setInterval(() => fakeButton.click(), 20);
+  }
 }
