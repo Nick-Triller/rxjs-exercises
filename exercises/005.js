@@ -1,6 +1,9 @@
 const Rx = require("rxjs");
 
-module.exports = () => {
+module.exports = {
+  "title": "#5",
+  "description": "This is exercise #5",
+  "code": () => {
     const source = [1,2,3,4,5];
 
     // Filtering everything, then mapping everything, then reducing everything
@@ -40,4 +43,5 @@ module.exports = () => {
     .subscribe(result => {
         console.log(result);
     })
+  }
 }

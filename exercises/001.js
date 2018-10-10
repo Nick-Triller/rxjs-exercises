@@ -1,6 +1,9 @@
 const Rx = require("rxjs");
 
-module.exports = () => {
+module.exports = {
+  "title": "#1",
+  "description": "This is exercise #1",
+  "code": () => {
     const source = Rx.Observable.create(observer => {
         console.log("started");
         const id = setTimeout(() => {
@@ -34,4 +37,5 @@ module.exports = () => {
     }, () => {
         console.log("complete");
     });
+  }
 }

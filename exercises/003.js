@@ -1,6 +1,9 @@
 const Rx = require("rxjs");
 
-module.exports = () => {
+module.exports = {
+  "title": "#3",
+  "description": "This is exercise #3",
+  "code": () => {
     const promise = new Promise(resolve => {
         setTimeout(() => {
             console.log("promise timeout hit");
@@ -23,6 +26,7 @@ module.exports = () => {
     const sub = source
         .forEach(x => console.log(x))
         .then(() => console.log("forEach returns promise on complete"));
+  }
 }
 
 // Observables are lazy, while promises are not.

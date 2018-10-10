@@ -2,57 +2,67 @@
 const fs = require("fs");
 
 // Command line argument
-const arg = process.argv[2];
+const command = process.argv[2];
 // List of available exercises
 const modules = list();
 
-switch (arg) {
-    // No command line argument
-    case undefined || "help":
-        help();
-        break;
+switch (command) {
     // List all exercises
     case "list":
-        modules.forEach(e => {
-            console.log(e);
+        const seperator = "--------------------------------------------------";
+        console.log(seperator)
+        modules.forEach((e, i) => {
+            console.log("Title\t\t", e.title);
+            console.log("File\t\t", e.file);
+            console.log("Description\t", e.description);
+            console.log(seperator)
         });
         break;
     // Run exercise if it exists
+    case "run":
+        const arg = process.argv[3]
+        for (const module of modules) {
+            if (module.file == arg) {
+              runExercise(arg);
+              return
+            }
+        }
+        console.log("Exercise not found. Run help command for usage information.");
+        break;
     default:
-        if (modules.includes(arg)) {
-            runExercise(arg);
-        }
-        else {
-            console.log("Exercise not found. Run help command for usage information.")
-        }
+        // Invald / missing command or "help"
+        help();
+        break;
 }
 
 /**
  * Print usage help
  */
 function help() {
-    console.log("Usage:")
-    console.log("list\t\t\tList all available exercises")
-    console.log("<exercide name>\t\tRun specified exercise")
-    console.log("help\t\t\tShow help text")
+    console.log("Usage:");
+    console.log("list\t\t\tList all available exercises");
+    console.log("run <filename>\t\tRun specified exercise");
+    console.log("help\t\t\tShow help text");
 }
 
 /**
  * Returns a list of available exercise modules
  */
 function list() {
-    let files = fs.readdirSync("./exercises");
+    const files = fs.readdirSync("./exercises");
+    const modules = [];
     for (let i = 0; i < files.length; i++) {
-        // Remove .js file ending
-        files[i] = files[i].substr(0, files[i].lastIndexOf(".js"));
+        const module = require("./exercises/" + files[i]);
+        module["file"] = files[i];
+        modules.push(module);
     }
-    return files;
+    return modules;
 }
 
 /**
  * Runs an exercise module
  */
 function runExercise(moduleName) {
-    require("./exercises/" + moduleName)();
+    require("./exercises/" + moduleName).code();
 }
 
